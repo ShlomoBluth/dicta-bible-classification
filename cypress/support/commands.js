@@ -28,13 +28,11 @@ Cypress.Commands.add('newIntercept',(url,delaySeconds,status,name)=>{
 })
 
 Cypress.Commands.add('checkMessage',(title,id,delaySeconds,message)=>{
-    //cy.wait('@'+name,{responseTimeout:1000*delaySeconds+30000}).then(()=>{
-        cy.contains(title+message,{timeout:delaySeconds}).should('be.visible')
+    cy.contains(title+message,{timeout:1000*delaySeconds}).should('be.visible')
         cy.get('div[id*="'+id+'"]').within(()=>{
             cy.get('button').click({force: true})
         })
-        cy.contains(title+message).should('not.be.visible')    
-    //})
+    cy.contains(title+message).should('not.be.visible')        
 })
 
 Cypress.Commands.add('bibleClassificationRequest',({status=200,message='',delaySeconds=0})=>{
