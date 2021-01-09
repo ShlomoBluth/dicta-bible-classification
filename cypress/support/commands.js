@@ -27,14 +27,14 @@ Cypress.Commands.add('newIntercept',(url,delaySeconds,status,name)=>{
     }).as(name)
 })
 
-Cypress.Commands.add('checkMessage',(title,name,id,delaySeconds,message)=>{
-    cy.get('@'+name).its('response',{timeout:1000*delaySeconds}).then(()=>{
-        cy.contains(title+message).should('be.visible')
+Cypress.Commands.add('checkMessage',(title,id,delaySeconds,message)=>{
+    //cy.wait('@'+name,{responseTimeout:1000*delaySeconds+30000}).then(()=>{
+        cy.contains(title+message,{timeout:delaySeconds}).should('be.visible')
         cy.get('div[id*="'+id+'"]').within(()=>{
             cy.get('button').click({force: true})
         })
         cy.contains(title+message).should('not.be.visible')    
-    })
+    //})
 })
 
 Cypress.Commands.add('bibleClassificationRequest',({status=200,message='',delaySeconds=0})=>{
@@ -45,8 +45,8 @@ Cypress.Commands.add('bibleClassificationRequest',({status=200,message='',delayS
     cy.get('button').contains('Start Experiment').click()
     cy.selectingClasses()
     if(message.length>0){
-        cy.checkMessage('Feature Extraction:','statistics','ef_',delaySeconds,message)
-        cy.checkMessage('Cross-validation:','crossvalidate','cv_',delaySeconds,message)
+        cy.checkMessage('Feature Extraction:','ef_',delaySeconds,message)
+        cy.checkMessage('Cross-validation:','cv_',delaySeconds,message)
     }
 
 })
