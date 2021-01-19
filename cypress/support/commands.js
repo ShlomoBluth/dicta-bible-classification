@@ -1,12 +1,22 @@
 
 
-Cypress.Commands.add('selectingClasses',()=>{
+Cypress.Commands.add('selectingClasses',(url,message,delaySeconds)=>{
     cy.get('div[class="txt-frame"]').first().within(()=>{
         cy.get('button').click({force: true})
     })
     cy.get('ul[id="genesis"]').children().first().within(()=>{
         cy.get('input').click({force: true})
     })
+    if(url=='GetTextLargeAndSmall'){
+        if(delaySeconds>0){
+            cy.get('[class*="spinner"]',{timeout:delaySeconds*1000}).should('not.be.visible')
+        }else{
+            cy.get('[class*="spinner"]').should('not.be.visible')
+        }
+        if(message.length>0){
+            cy.contains(message).should('be.visible') 
+        }
+    }  
     cy.get('button').contains('Select Text').click({force: true}).then(()=>{
         cy.get('div[class="txt-frame"]').next().within(()=>{
             cy.get('button').click({force: true})
@@ -20,31 +30,26 @@ Cypress.Commands.add('selectingClasses',()=>{
     })
 })
 
-Cypress.Commands.add('newIntercept',(url,delaySeconds,status,name)=>{
-    cy.intercept('POST', url, {
+
+
+
+Cypress.Commands.add('bibleClassificationRequest',({url,status=200,message='',delaySeconds=0})=>{
+    cy.intercept('POST','**'+url, {
         delayMs:1000*delaySeconds,
         statusCode: status
-    }).as(name)
-})
-
-Cypress.Commands.add('checkMessage',(title,id,delaySeconds,message)=>{
-    cy.contains(title+message,{timeout:1000*delaySeconds}).should('be.visible')
-        cy.get('div[id*="'+id+'"]').within(()=>{
-            cy.get('button').click({force: true})
-        })
-    cy.contains(title+message).should('not.be.visible')        
-})
-
-Cypress.Commands.add('bibleClassificationRequest',({status=200,message='',delaySeconds=0})=>{
-    cy.newIntercept('/server/classifier/statistics',delaySeconds,status,'statistics')
-    cy.newIntercept('/server/classifier/crossvalidate',delaySeconds,status,'crossvalidate')
-    cy.newIntercept('/server/DictaDatabaseServer/api/TextFeatures/GetTextLargeAndSmall',
-    delaySeconds,status,'api')
+    })
+    
+    cy.intercept('POST','**', {
+        statusCode: 200
+    })
+    
     cy.get('button').contains('Start Experiment').click()
-    cy.selectingClasses()
+    cy.selectingClasses(url,message,delaySeconds)
+    if(delaySeconds>0){
+        cy.get('[class*="spinner"]',{timeout:1000*delaySeconds}).should('not.be.visible')
+    }
     if(message.length>0){
-        cy.checkMessage('Feature Extraction:','ef_',delaySeconds,message)
-        cy.checkMessage('Cross-validation:','cv_',delaySeconds,message)
+        cy.contains(message).should('be.visible')
     }
 
 })

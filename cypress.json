@@ -1,6 +1,6 @@
 {
     "projectId": "4brer3",
     "screenshotOnRunFailure": false,
-    "defaultCommandTimeout": 30000,
+    "defaultCommandTimeout": 10000,
     "pageLoadTimeout":90000
 }
