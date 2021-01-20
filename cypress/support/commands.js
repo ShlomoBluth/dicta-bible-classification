@@ -16,18 +16,19 @@ Cypress.Commands.add('selectingClasses',(url,message,delaySeconds)=>{
         if(message.length>0){
             cy.contains(message).should('be.visible') 
         }
+    }else{
+        cy.get('button').contains('Select Text').click({force: true}).then(()=>{
+            cy.get('div[class="txt-frame"]').next().within(()=>{
+                cy.get('button').click({force: true})
+            })
+            cy.get('ul[id="genesis"]').children().first().next().within(()=>{
+                cy.get('input').click({force: true})
+            })
+            cy.get('button').contains('Select Text').click({force: true})
+        }).then(()=>{
+            cy.get('button').contains('Analyze Classes').click({force: true})
+        })
     }  
-    cy.get('button').contains('Select Text').click({force: true}).then(()=>{
-        cy.get('div[class="txt-frame"]').next().within(()=>{
-            cy.get('button').click({force: true})
-        })
-        cy.get('ul[id="genesis"]').children().first().next().within(()=>{
-            cy.get('input').click({force: true})
-        })
-        cy.get('button').contains('Select Text').click({force: true})
-    }).then(()=>{
-        cy.get('button').contains('Analyze Classes').click({force: true})
-    })
 })
 
 
