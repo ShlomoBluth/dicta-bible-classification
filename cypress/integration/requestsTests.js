@@ -9,6 +9,10 @@ describe('requestsTests',()=>{
     cy.visit('https://tiberias.dicta.org.il/#/')
   })
 
+  afterEach(()=>{
+    cy.on('window:confirm', () => true);
+})
+
   
 
 
@@ -69,6 +73,27 @@ describe('requestsTests',()=>{
       url:'crossvalidate',
       status:500,
       message:'Cross-validation: Server failed to respond.'
+    })
+  })
+
+  
+
+  it('Error message for classify response with a delay of 5 minutes when clicking the run button'+
+  ' of tiberias page',()=>{
+    cy.bibleClassificationRequest({
+      url:'classify',
+      message:' Server took too long to respond.',
+      delaySeconds:60*5
+    })
+  })
+
+  
+  it('Error message for classify response with status code 500 when clicking the run button of tiberias page'
+  ,()=>{
+    cy.bibleClassificationRequest({
+      url:'classify',
+      status:500,
+      message:' Server failed to respond.'
     })
   })
     

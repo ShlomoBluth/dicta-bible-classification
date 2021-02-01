@@ -1,35 +1,56 @@
-
-
-Cypress.Commands.add('selectingClasses',(url,message,delaySeconds)=>{
-    cy.get('div[class="txt-frame"]').first().within(()=>{
-        cy.get('button').click({force: true})
-    })
-    cy.get('ul[id="genesis"]').children().first().within(()=>{
-        cy.get('input').click({force: true})
-    })
-    if(url=='GetTextLargeAndSmall'){
-        if(delaySeconds>0){
-            cy.get('[class*="spinner"]',{timeout:delaySeconds*1000}).should('not.be.visible')
-        }else{
-            cy.get('[class*="spinner"]').should('not.be.visible')
-        }
-        if(message.length>0){
-            cy.contains(message).should('be.visible') 
-        }
+Cypress.Commands.add('selectText',({collection,book='',popupInner='',delaySeconds=0, message=''})=>{
+    cy.get('p').contains('Click Select to choose text(s).')
+    .first().parent().siblings('button').click()
+    //If seledted the all collection
+    if(book==''){
+        cy.get('div[class="scrollable25"]').within(()=>{
+            cy.contains(collection).click({force: true})
+        })
     }else{
-        cy.get('button').contains('Select Text').click({force: true}).then(()=>{
-            cy.get('div[class="txt-frame"]').next().within(()=>{
-                cy.get('button').click({force: true})
+        cy.get('div[class*="scrollable25"]').within(()=>{
+            cy.contains(collection).siblings('div[class="after"]').click({force: true})
+        })
+        if(popupInner=='true'){
+            cy.get('.popup-inner > .text-selection-popup').within(()=>{
+                cy.get('label[id="showtxt"]').contains(book).should('exist')
+                cy.contains(book).click({force: true})
+                cy.tastMessage({
+                    HtmlElement:'[class*="spinner"]',
+                    delaySeconds:delaySeconds,
+                    message:message,
+                    spinnerShould:'not.exist'
+                })
+                cy.get('button').contains('Select Text').click({force: true})
             })
-            cy.get('ul[id="genesis"]').children().first().next().within(()=>{
-                cy.get('input').click({force: true})
+        }else{
+            cy.get('div[class*="scrollable25"]').within(()=>{
+                cy.get('label[id="showtxt"]').contains(book).should('exist')
+                cy.contains(book).click({force: true})
+            })
+            cy.tastMessage({
+                HtmlElement:'span > .v-spinner > .v-clip',
+                delaySeconds:delaySeconds,
+                message:message,
+                spinnerShould:'not.exist'
             })
             cy.get('button').contains('Select Text').click({force: true})
-        }).then(()=>{
-            cy.get('button').contains('Analyze Classes').click({force: true})
-        })
-    }  
+        }
+    }
 })
+
+
+Cypress.Commands.add('tastMessage',({HtmlElement,delaySeconds=0,message='',spinnerShould})=>{
+    if(delaySeconds>0){
+        cy.get(HtmlElement,{timeout:1000*delaySeconds}).should(spinnerShould)
+    }else{
+        cy.get(HtmlElement,{timeout:1000*60}).should(spinnerShould)
+    }
+    if(message.length>0){
+        cy.contains(message).should('be.visible')
+    }
+})
+
+
 
 
 
@@ -45,12 +66,49 @@ Cypress.Commands.add('bibleClassificationRequest',({url,status=200,message='',de
     })
     
     cy.get('button').contains('Start Experiment').click()
-    cy.selectingClasses(url,message,delaySeconds)
-    if(delaySeconds>0){
-        cy.get('[class*="spinner"]',{timeout:1000*delaySeconds}).should('not.be.visible')
+    if(url=='GetTextLargeAndSmall'){
+        cy.selectText({
+            collection:'Torah',
+            book:'Genesis',
+            delaySeconds:delaySeconds,
+            message:message
+        })
+    }else{
+        cy.selectText({
+            collection:'Torah',
+            book:'Genesis'
+        })
     }
-    if(message.length>0){
-        cy.contains(message).should('be.visible')
+
+    cy.selectText({
+        collection:'Torah',
+        book:'Exodus'
+    })
+    .then(()=>{
+        cy.get('button').contains('Analyze Classes').click({force: true})
+    })
+    if(url!='classify'){
+        cy.tastMessage({
+            HtmlElement:':nth-child(1) > .v-spinner > .v-clip',
+            delaySeconds:delaySeconds,
+            message:message,
+            spinnerShould:'not.exist'
+        })
+    }else{
+        cy.get(':nth-child(1) > .v-spinner > .v-clip',{timeout:1000*60}).should('not.exist')
+        cy.get('button[data-target="#text_for_classification_popup"]').click({force: true})
+        cy.selectText({
+            collection:'Torah',
+            book:'Numbers',
+            popupInner:'true'
+        })
+        cy.get('button').contains('Classify Text').click({force: true})
+        cy.tastMessage({
+            HtmlElement:'[class*="spinner"]',
+            delaySeconds:delaySeconds,
+            message:message,
+            spinnerShould:'not.be.visible'
+        })
     }
 
 })
