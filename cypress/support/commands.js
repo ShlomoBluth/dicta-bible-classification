@@ -61,9 +61,9 @@ Cypress.Commands.add('bibleClassificationRequest',({url,status=200,message='',de
         statusCode: status
     })
     
-    cy.intercept('POST','**', {
-        statusCode: 200
-    })
+    // cy.intercept('POST','**', {
+    //     statusCode: 200
+    // })
     
     cy.get('button').contains('Start Experiment').click()
     if(url=='GetTextLargeAndSmall'){
