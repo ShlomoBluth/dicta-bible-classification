@@ -17,7 +17,7 @@
 //     //   cy.bibleClassificationRequest({
 //     //     url:'GetTextLargeAndSmall',
 //     //     message:' Server took too long to respond.',
-//     //     delaySeconds:60*5
+//     //     delaySeconds:65*5
 //     //   })
 //     // })
   
@@ -39,7 +39,7 @@
 //     //   cy.bibleClassificationRequest({
 //     //     url:'statistics',
 //     //     message:' Server took too long to respond.',
-//     //     delaySeconds:60*2
+//     //     delaySeconds:65*2
 //     //   })
 //     // })
   
@@ -58,7 +58,7 @@
 //     //   cy.bibleClassificationRequest({
 //     //     url:'crossvalidate',
 //     //     message:'Cross-validation: Server took too long to respond.',
-//     //     delaySeconds:60*2
+//     //     delaySeconds:65*2
 //     //   })
 //     // })
   

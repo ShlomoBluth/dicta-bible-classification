@@ -37,7 +37,7 @@ sizes.forEach((size) => {
     //   cy.bibleClassificationRequest({
     //     url:'GetTextLargeAndSmall',
     //     message:' Server took too long to respond.',
-    //     delaySeconds:60*5
+    //     delaySeconds:65*5
     //   })
     // })
   
@@ -59,7 +59,7 @@ sizes.forEach((size) => {
       cy.bibleClassificationRequest({
         url:'statistics',
         message:'Feature Extraction: Server took too long to respond.',
-        delaySeconds:60*2
+        delaySeconds:65*2
       })
     })
   
@@ -78,7 +78,7 @@ sizes.forEach((size) => {
       cy.bibleClassificationRequest({
         url:'crossvalidate',
         message:'Cross-validation: Server took too long to respond.',
-        delaySeconds:60*2
+        delaySeconds:65*2
       })
     })
   
@@ -99,7 +99,7 @@ sizes.forEach((size) => {
       cy.bibleClassificationRequest({
         url:'classify',
         message:'Server took too long to respond.',
-        delaySeconds:60*5
+        delaySeconds:65*5
       })
     })
   
