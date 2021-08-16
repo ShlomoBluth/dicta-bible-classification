@@ -1,6 +1,6 @@
 Cypress.Commands.add('selectText',({collection,book='',popupInner='',delaySeconds=0, message=''})=>{
     cy.get('p').contains('Click Select to choose text(s).')
-    .first().parent().siblings('button').click()
+    .first().parent().siblings('button').click({force: true})
     //If seledted the all collection
     if(book==''){
         cy.get('div[class="scrollable25"]').within(()=>{
@@ -65,7 +65,7 @@ Cypress.Commands.add('bibleClassificationRequest',({url,status=200,message='',de
     //     statusCode: 200
     // })
     
-    cy.get('button').contains('Start Experiment').click()
+    cy.get('button').contains('Start Experiment').click({force: true})
     if(url=='GetTextLargeAndSmall'){
         cy.selectText({
             collection:'Torah',
