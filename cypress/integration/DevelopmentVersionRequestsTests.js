@@ -6,6 +6,7 @@
 
     
 //     beforeEach(() => {
+//        cy.visitpage({url:'https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/'})
 //       cy.visit('https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/')
 //     })
   
