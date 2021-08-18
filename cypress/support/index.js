@@ -16,7 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import addContext from 'mochawesome/addContext'
-import '../../dicta-shared/visit.js'
+import '../../dicta-shared/shared.js'
 
 Cypress.on("test:after:run", (test, runnable) => {
     
