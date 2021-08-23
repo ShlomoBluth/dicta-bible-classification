@@ -10,6 +10,11 @@
         "openMode": 0
     },
     "reporterOptions": {
-        "configFile": "reporter-config.json"
+        "configFile": "dicta-shared/reporter-config.json"
+    },
+    "env":{
+        "BASIC_TESTS":true,
+        "REQUESTS_TESTS":true,
+        "RECORD_KEY":"c445b898-a31b-456c-84cf-a5237b76d20f"
     }
 }
