@@ -4,6 +4,7 @@
     "defaultCommandTimeout": 60000,
     "pageLoadTimeout":180000,
     "baseUrl":"https://tiberias.dicta.org.il/#/",
+    "failOnStatusCode": false,
     "reporter": "cypress-multi-reporters",
     "retries": {
         "runMode": 1,
