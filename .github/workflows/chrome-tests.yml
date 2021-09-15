@@ -29,7 +29,7 @@ jobs:
         $(npm bin)/cypress verify
         mkdir public
 
-    - name: Set var 
+    - name: Set var
       run: |
         echo "TOOL_TESTS=$(grep TOOL_TESTS cypress.json | sed 's/TOOL_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV
         echo "REQUESTS_TESTS=$(grep REQUESTS_TESTS cypress.json | sed 's/REQUESTS_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV 
@@ -37,7 +37,10 @@ jobs:
 
     - name: Run chrome tool tests
       id: test
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
+      with: 
+        timeout_seconds: 30
+        max_attempts: 3 
+        run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
