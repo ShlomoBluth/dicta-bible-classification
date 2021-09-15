@@ -42,7 +42,7 @@ jobs:
 
     - name: retry
       if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: echo ${{steps.test.outcome}}
+      run: echo ${{steps.test}}
 
     - name: Copy test execution videos 
       run: |
