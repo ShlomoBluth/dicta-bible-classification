@@ -41,10 +41,8 @@ jobs:
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
-      continue-on-error: true
-      id: retry1
       if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: echo steps.test.outcome
+      run: echo ${{steps.test.outcome}}
 
     - name: Copy test execution videos 
       run: |
