@@ -37,10 +37,11 @@ jobs:
 
     - name: Run chrome tool tests
       id: test
+      uses: actions/checkout@v1
       with: 
         timeout_minutes: 2
         max_attempts: 2 
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
+        command: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
