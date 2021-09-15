@@ -17,7 +17,7 @@
         "DEV_URL":"",
         "LIVE_URL":"https://tiberias.dicta.org.il/#/",
         "TOOL_TESTS":true,
-        "REQUESTS_TESTS":true,
+        "REQUESTS_TESTS":false,
         "RECORD_KEY":"c445b898-a31b-456c-84cf-a5237b76d20f"
     }
 }
