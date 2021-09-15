@@ -1,10 +1,10 @@
 name: Chrome tests
 
 on:
-  #push
-  schedule:
+  push
+  #schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 6,14,22 * * *'
+    #- cron:  '0 6,14,22 * * *'
 
 
 jobs:
@@ -35,7 +35,9 @@ jobs:
         echo "REQUESTS_TESTS=$(grep REQUESTS_TESTS cypress.json | sed 's/REQUESTS_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV 
   
 
-    - name: Run chrome tool tests 
+    - name: Run chrome tool tests
+      max_attempts: 1
+      retry_on: error 
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}}
 

@@ -25,7 +25,7 @@ urls.forEach((urlValue,urlKey)=>{
             })
 
             it('Run bible classification',()=>{
-                cy.get('button').contains('Start Experiment').click()
+                cy.get('button').contains('Start Experiment').click({force:true})
                 cy.selectText({
                     collection:'Torah',
                     book:'Genesis'
@@ -44,7 +44,7 @@ urls.forEach((urlValue,urlKey)=>{
                 })
                 cy.get('button').contains('Classify Text').click({force: true})
                 cy.get(':nth-child(13) > .bar').should('have.css','background-color','rgb(204, 0, 193)')
-            })
+            })            
         
     
         })
