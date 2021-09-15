@@ -18,6 +18,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       with:
+        timeout_minutes: 2
+        max_attempts: 2 
         submodules: true
 
 
@@ -38,9 +40,6 @@ jobs:
     - name: Run chrome tool tests
       id: test
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
-      with: 
-        timeout_minutes: 2
-        max_attempts: 2 
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
