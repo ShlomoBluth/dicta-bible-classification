@@ -37,7 +37,6 @@ jobs:
 
     - name: Run chrome tool tests
       id: test
-      uses: actions/checkout@v1
       with: 
         timeout_minutes: 2
         max_attempts: 2 
