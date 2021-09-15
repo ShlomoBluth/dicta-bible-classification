@@ -45,14 +45,15 @@ jobs:
       if: ${{ always() && (env.TOOL_TESTS == 'true')}}
 
     - name: Run chrome requests tests
+      id: test
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js --config trashAssetsBeforeRuns=false
       if: ${{always() && (env.REQUESTS_TESTS == 'true')}}
 
-     - name: retry
-        continue-on-error: true
-        id: retry1
-        if: steps.test.outcome=='failure'  
-        run: echo steps.test.outcome
+    - name: retry
+      continue-on-error: true
+      id: retry1
+      if: steps.test.outcome=='failure'  
+      run: echo steps.test.outcome
 
     - name: Copy test execution videos 
       run: |
