@@ -39,12 +39,12 @@ jobs:
 
     - name: Run chrome tool tests
       id: test
-      run: output=$(xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js)
+      run: xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
       if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: echo ${{steps.test.output}}
+      run: echo $(!!)
 
     - name: Copy test execution videos 
       run: |
