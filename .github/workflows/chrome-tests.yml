@@ -44,9 +44,9 @@ jobs:
         echo cypress/results/json/*.json
       if: ${{env.TOOL_TESTS == 'true'}}
 
-    #- name: retry
-      #if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      #run: gh run view test --log
+    - name: retry
+      if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
+      run: echo cypress/results/json/*.json
 
     - name: Copy test execution videos 
       run: |
