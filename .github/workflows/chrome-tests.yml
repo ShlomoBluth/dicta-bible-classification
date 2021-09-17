@@ -41,13 +41,13 @@ jobs:
       id: test
       run: |
         output=xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js;
-        echo true
-        echo output
+        echo "true"
+        echo ${{output}}
       if: ${{env.TOOL_TESTS == 'true'}}
 
-    - name: retry
-      if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: gh run view test --log
+    #- name: retry
+      #if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
+      #run: gh run view test --log
 
     - name: Copy test execution videos 
       run: |
