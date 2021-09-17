@@ -11,6 +11,7 @@ jobs:
   cypress-e2e:
     name: Run on Chrome 89
     runs-on: ubuntu-latest
+    id: test
     container: 
       image: cypress/browsers:node14.16.0-chrome89-ff86
       options: --user 1001
@@ -38,13 +39,12 @@ jobs:
   
 
     - name: Run chrome tool tests
-      id: test
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
       if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: gh run view test --log
+      run: gh run view --job test --log-failed
 
     - name: Copy test execution videos 
       run: |
