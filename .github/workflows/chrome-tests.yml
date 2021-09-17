@@ -44,7 +44,7 @@ jobs:
 
     - name: retry
       if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: echo ${{steps.test}}
+      run: gh run view test --log
 
     - name: Copy test execution videos 
       run: |
