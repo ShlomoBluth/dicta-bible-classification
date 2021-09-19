@@ -40,7 +40,9 @@ jobs:
     - name: Run chrome tool tests
       run: |
         xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log
-        echo "::set-output name=mix-test::$(cat toolTest.log)"
+        if [[ 'grep 'Error: ESOCKETTIMEDOUT' $toolTest.log' ]];then
+          echo 'true'
+        fi
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
