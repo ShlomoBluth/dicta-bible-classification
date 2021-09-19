@@ -41,7 +41,7 @@ jobs:
       run: |
         xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log
         ls
-        grep baseUrl cypress.json
+        grep -q baseUrl cypress.json
       #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
       if: ${{env.TOOL_TESTS == 'true'}}
 
