@@ -43,7 +43,7 @@ jobs:
         ls
         grep -q "baseUrl" cypress.json
 
-        if [$? -eq 0]; 
+        if [$? == 0]; 
         then 
           echo found 
         fi
