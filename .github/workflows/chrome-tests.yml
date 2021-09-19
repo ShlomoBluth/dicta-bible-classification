@@ -38,8 +38,9 @@ jobs:
   
 
     - name: Run chrome tool tests
-      run: xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | 
-        tee toolTest.log
+      run: |
+        xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log
+        cat test.log
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: retry
