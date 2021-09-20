@@ -46,6 +46,8 @@ jobs:
         if (($? == 0)); 
         then 
           echo found 
+        else
+          echo not found
         fi
       #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
       if: ${{env.TOOL_TESTS == 'true'}}
