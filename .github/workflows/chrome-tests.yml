@@ -41,9 +41,7 @@ jobs:
       run: |
         xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log
         ls
-        grep -q "baseUrl1" cypress.json
-        echo $?
-        baseurl=$?
+        baseurl=$(grep -q "baseUrl1" cypress.json)
         echo baseurl
         if (($? == 0))
         then 
