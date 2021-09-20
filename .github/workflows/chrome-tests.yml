@@ -43,7 +43,7 @@ jobs:
         ls
         if grep -q "Error: ESOCKETTIMEDOUT" toolTest.log;
         then 
-          xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
+          npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
         else
           echo not found $?
         fi
