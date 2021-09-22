@@ -39,7 +39,7 @@ jobs:
 
     - name: Run chrome tool tests
       run: |
-        if npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log;
+        if npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js; | tee toolTest.log
         then
           echo success
         else
