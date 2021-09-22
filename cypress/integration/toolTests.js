@@ -25,6 +25,7 @@ urls.forEach((urlValue,urlKey)=>{
             })
 
             it('Run bible classification',()=>{
+                expect(5).eq(7)
                 cy.get('button').contains('Start Experiment').click({force:true})
                 cy.selectText({
                     collection:'Torah',
