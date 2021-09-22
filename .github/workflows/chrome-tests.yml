@@ -39,9 +39,7 @@ jobs:
 
     - name: Run chrome tool tests
       run: |
-        xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log
-        ls
-        if $? -eq 0;
+        if output=$(xvfb-run npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js);
         then
           echo success
         else
