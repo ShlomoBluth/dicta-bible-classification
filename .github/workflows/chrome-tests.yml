@@ -39,11 +39,11 @@ jobs:
 
     - name: Run chrome tool tests
       run: |
-        if toolatestaOutput=$(npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js);
+        if npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js | tee toolTest.log;
         then
           echo success
         else
-          echo $toolatestaOutput
+          echo failed
         fi
       #  if grep -q "Error: ESOCKETTIMEDOUT1" toolTest.log;
       #  then 
