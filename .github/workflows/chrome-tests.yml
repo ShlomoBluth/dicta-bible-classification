@@ -41,7 +41,7 @@ jobs:
       run: |
         if npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js && [$? -eq 0]|tee toolTest.log
         then
-          echo success
+          echo "$(cat toolTest.log)"
         else
           echo failed
         fi
