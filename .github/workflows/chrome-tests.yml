@@ -44,11 +44,12 @@ jobs:
         then
           cat toolTest.log
         else
-          if grep -q "Error: ESOCKETTIMEDOUT" toolTest.log;
+          if  grep -q "Error: ffmpeg exited with code 1: pipe:0: Function not implemented" toolTest.log
+            || grep -q "Because this error occurred during a `before each` hook" toolTest.log;
           then
             cat toolTest.log; npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
           else
-            cat toolTest.log; return false
+            cat toolTest.log; exit 1
           fi
         fi
       #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
