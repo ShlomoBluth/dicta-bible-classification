@@ -44,13 +44,12 @@ jobs:
         then
           cat toolTest.log
         else
-          
-        fi
-        if grep -q "Error: ESOCKETTIMEDOUT1" toolTest.log;
-        then
-          npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
-        else
-          cat toolTest.log
+          if grep -q "Error: ESOCKETTIMEDOUT1" toolTest.log;
+          then
+            npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
+          else
+            cat toolTest.log
+          fi
         fi
       #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
       if: ${{env.TOOL_TESTS == 'true'}}
