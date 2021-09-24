@@ -44,7 +44,7 @@ jobs:
         then
           cat toolTest.log
         else
-          if grep -q "Error: ESOCKETTIMEDOUT1" toolTest.log;
+          if grep -q "Error: ESOCKETTIMEDOUT" toolTest.log;
           then
             echo true
           else
