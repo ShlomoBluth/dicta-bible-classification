@@ -40,7 +40,9 @@ jobs:
     - name: Run chrome tool tests
       run: |
         touch toolTest.log
-        if npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js >> toolTest.log
+        toolTestsCommand='npx cypress run --browser chrome --spec \
+        ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false'
+        if $toolTestsCommand >> toolTest.log
         then
           cat toolTest.log
         else
@@ -48,12 +50,11 @@ jobs:
           || grep -q 'Because this error occurred during a `before each` hook' toolTest.log \
           || EISDIR: illegal operation on a directory, read;
           then
-            cat toolTest.log; npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
+            cat toolTest.log; $toolTestsCommand
           else
             cat toolTest.log; exit 1
           fi
-        fi
-      #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
+        fi 
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: Copy test execution videos 
