@@ -45,7 +45,8 @@ jobs:
           cat toolTest.log
         else
           if grep -q 'Error: ffmpeg exited' toolTest.log \
-          || grep -q 'Because this error occurred during a `before each` hook' toolTest.log ;
+          || grep -q 'Because this error occurred during a `before each` hook' toolTest.log \
+          || EISDIR: illegal operation on a directory, read;
           then
             cat toolTest.log; npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
           else
@@ -54,10 +55,6 @@ jobs:
         fi
       #  if grep -q 'Error: ESOCKETTIMEDOUT' "$(cat toolTest.log)" ; then (echo 'true') fi  
       if: ${{env.TOOL_TESTS == 'true'}}
-
-    - name: retry
-      if: ${{ always() && (env.TOOL_TESTS == 'true')}} 
-      run: echo "::set-output name=mix-test::$(cat toolTest.log)"
 
     - name: Copy test execution videos 
       run: |
