@@ -1,10 +1,10 @@
 name: Chrome tests
 
 on:
-  push
-  #schedule:
+  #push
+  schedule:
     # * is a special character in YAML so you have to quote this string
-    #- cron:  '0 6,14,22 * * *'
+    - cron:  '0 6,14,22 * * *'
 
 
 jobs:
@@ -18,8 +18,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       with:
-        timeout_minutes: 2
-        max_attempts: 2 
         submodules: true
 
 
@@ -66,9 +64,9 @@ jobs:
     - name: Run chrome requests tests
       run: |
         touch requestsTest.log
-        toolTestsCommand='npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js \
+        requestsTestsCommand='npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js \
         --config trashAssetsBeforeRuns=false'
-        if $toolTestsCommand >> requestsTest.log
+        if $requestsTestsCommand >> requestsTest.log
         then
           cat requestsTest.log
         else
@@ -76,7 +74,7 @@ jobs:
           || grep -q 'Because this error occurred during a `before each` hook' requestsTest.log \
           || grep -q 'EISDIR: illegal operation on a directory, read' requestsTest.log;
           then
-            cat requestsTest.log; $toolTestsCommand
+            cat requestsTest.log; $requestsTestsCommand
           else
             cat requestsTest.log; exit 1
           fi
