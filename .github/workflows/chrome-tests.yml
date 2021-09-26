@@ -44,7 +44,8 @@ jobs:
         then
           cat toolTest.log
         else
-          if grep -q 'Because this error occurred during a `before each` hook' toolTest.log;
+          if grep -q 'Error: ffmpeg exited' toolTest.log \
+          || grep -q 'Because this error occurred during a `before each` hook' toolTest.log ;
           then
             cat toolTest.log; npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
           else
