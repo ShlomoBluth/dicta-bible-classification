@@ -1,14 +1,17 @@
 Cypress.Commands.add('selectText',({collection,book='',popupInner='',delaySeconds=0, message=''})=>{
-    cy.get('p').contains('Click Select to choose text(s).')
-    .first().parent().siblings('button').click({force: true})
+    // cy.get('p').contains('Click Select to choose text(s).')
+    // .first().parent().siblings('button').click({force: true})
     //If seledted the all collection
+    cy.get('.selectedtxt').contains('Click Select to choose text(s)').parent()
+    .siblings('button').click({force: true})
+    .click({force: true})
     if(book==''){
-        cy.get('div[class="scrollable25"]').within(()=>{
+        cy.get('p').contains(collection).parent().within(()=>{
             cy.contains(collection).click({force: true})
         })
     }else{
-        cy.get('div[class*="scrollable25"]').within(()=>{
-            cy.contains(collection).siblings('div[class="after"]').click({force: true})
+        cy.get('p').contains(collection).parent().parent().within(()=>{
+            cy.get(('div[class="after"]')).click({force: true})
         })
         if(popupInner=='true'){
             cy.get('.popup-inner > .text-selection-popup').within(()=>{
@@ -23,7 +26,7 @@ Cypress.Commands.add('selectText',({collection,book='',popupInner='',delaySecond
                 cy.get('button').contains('Select Text').click({force: true})
             })
         }else{
-            cy.get('div[class*="scrollable25"]').within(()=>{
+            cy.get('#genesis').within(()=>{
                 cy.get('label[id="showtxt"]').contains(book).should('exist')
                 cy.contains(book).click({force: true})
             })
