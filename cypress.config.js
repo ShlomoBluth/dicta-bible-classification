@@ -18,14 +18,12 @@ module.exports = defineConfig({
   env: {
     DEV_URL: '',
     LIVE_URL: 'https://tiberias.dicta.org.il/#/',
-    TOOL_TESTS: true,
-    REQUESTS_TESTS: true,
-    RECORD_KEY: 'c445b898-a31b-456c-84cf-a5237b76d20f',
   },
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
+      require('./dicta-shared/videoCleanup')(on)
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'https://tiberias.dicta.org.il/#/',
