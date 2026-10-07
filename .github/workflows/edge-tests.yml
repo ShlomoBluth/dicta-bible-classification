@@ -1,3 +1,4 @@
+# Calls the shared Cypress workflow in ShlomoBluth/workflows
 name: Edge tests
 
 on:
