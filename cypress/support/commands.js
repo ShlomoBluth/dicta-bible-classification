@@ -49,7 +49,12 @@ Cypress.Commands.add('tastMessage',({HtmlElement,delaySeconds=0,message='',spinn
         cy.get(HtmlElement,{timeout:1000*60}).should(spinnerShould)
     }
     if(message.length>0){
-        cy.contains(message).should('be.visible')
+        if(delaySeconds>0){
+            // with a delay the spinner can go away before the message shows, so give the message the full delay
+            cy.contains(message,{timeout:1000*delaySeconds+30000}).should('be.visible')
+        }else{
+            cy.contains(message).should('be.visible')
+        }
     }
 })
 
